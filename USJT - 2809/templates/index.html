@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>SOS Usabilidade</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>SOS Usabilidade</h1>
+  <p>{{ problemas|length }} problemas</p>
+
+  {% with mensagens = get_flashed_messages(with_categories=true) %}
+    {% for tipo, texto in mensagens %}
+      <p><strong>{{ "Sucesso" if tipo == "sucesso" else "Erro" }}:</strong> {{ texto }}</p>
+    {% endfor %}
+  {% endwith %}
+
+  <h2>Registrar novo problema</h2>
+  <form method="post" action="{{ url_for('cadastrar_problema') }}">
+    <p>
+      <label>Título *<br>
+        <input type="text" name="titulo" value="{{ form.get('titulo', '') }}">
+      </label>
+    </p>
+    <p>
+      <label>Sistema *<br>
+        <input type="text" name="sistema" value="{{ form.get('sistema', '') }}">
+      </label>
+    </p>
+    <p>
+      <label>Categoria *<br>
+        <select name="categoria">
+          <option value="">Selecione a categoria</option>
+          {% for c in categorias %}
+          <option value="{{ c }}" {% if form.get('categoria') == c %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </p>
+    <p>
+      Gravidade *<br>
+      {% for g in gravidades %}
+      <label>
+        <input type="radio" name="gravidade" value="{{ g }}" {% if form.get('gravidade') == g %}checked{% endif %}>
+        {{ g }}
+      </label>
+      {% endfor %}
+    </p>
+    <p>
+      <label>Descrição *<br>
+        <textarea name="descricao" rows="4" cols="40">{{ form.get('descricao', '') }}</textarea>
+      </label>
+    </p>
+    <button type="submit">Registrar problema</button>
+  </form>
+
+  <h2>Problemas registrados</h2>
+
+  <!-- Filtro por gravidade -->
+  <form method="get" action="{{ url_for('listar_problemas') }}" style="margin-bottom: 20px;">
+    <label>Filtrar por gravidade:
+      <select name="gravidade" onchange="this.form.submit()">
+        <option value="">Todas</option>
+        {% for g in gravidades %}
+        <option value="{{ g }}" {% if gravidade_filtro == g %}selected{% endif %}>{{ g }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    {% if gravidade_filtro %}
+      <a href="{{ url_for('listar_problemas') }}" style="margin-left: 10px;">Limpar filtro</a>
+    {% endif %}
+  </form>
+
+  {% if problemas %}
+  <table border="1" cellpadding="6">
+    <thead>
+      <tr><th>#</th><th>Título</th><th>Sistema</th><th>Categoria</th><th>Gravidade</th><th>Data</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+      {% for p in problemas %}
+      <tr>
+        <td>{{ p["id"] }}</td>
+        <td>{{ p["titulo"] }}</td>
+        <td>{{ p["sistema"] }}</td>
+        <td>{{ p["categoria"] }}</td>
+        <td>{{ p["gravidade"] }}</td>
+        <td>{{ p["criado_em"] }}</td>
+        <td>
+          <a href="{{ url_for('editar_problema', problema_id=p['id']) }}">Editar</a>
+          <form method="post" action="{{ url_for('excluir_problema', problema_id=p['id']) }}"
+                style="display:inline"
+                onsubmit="return confirm('Excluir o problema #{{ p['id'] }}? Esta ação não pode ser desfeita.');">
+            <button type="submit">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>Nenhum problema registrado ainda.</p>
+  {% endif %}
+</body>
+</html>

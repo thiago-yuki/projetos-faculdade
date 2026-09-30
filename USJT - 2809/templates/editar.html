@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Editar problema #{{ problema_id }} — SOS Usabilidade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>SOS Usabilidade</h1>
+
+  {% with mensagens = get_flashed_messages(with_categories=true) %}
+    {% for tipo, texto in mensagens %}
+      <p><strong>{{ "Sucesso" if tipo == "sucesso" else "Erro" }}:</strong> {{ texto }}</p>
+    {% endfor %}
+  {% endwith %}
+
+  <h2>Editando problema #{{ problema_id }}</h2>
+  <form method="post" action="{{ url_for('editar_problema', problema_id=problema_id) }}">
+    <p>
+      <label>Título *<br>
+        <input type="text" name="titulo" value="{{ form.get('titulo', '') }}">
+      </label>
+    </p>
+    <p>
+      <label>Sistema *<br>
+        <input type="text" name="sistema" value="{{ form.get('sistema', '') }}">
+      </label>
+    </p>
+    <p>
+      <label>Categoria *<br>
+        <select name="categoria">
+          <option value="">Selecione a categoria</option>
+          {% for c in categorias %}
+          <option value="{{ c }}" {% if form.get('categoria') == c %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </p>
+    <p>
+      Gravidade *<br>
+      {% for g in gravidade %}
+      <label>
+        <input type="radio" name="gravidade" value="{{ g }}" {% if form.get('gravidade') == g %}checked{% endif %}>
+        {{ g }}
+      </label>
+      {% endfor %}
+    </p>
+    <p>
+      <label>Descrição *<br>
+        <textarea name="descricao" rows="4" cols="40">{{ form.get('descricao', '') }}</textarea>
+      </label>
+    </p>
+    <button type="submit">Salvar alterações</button>
+    <a href="{{ url_for('listar_problemas') }}">Cancelar</a>
+  </form>
+</body>
+</html>

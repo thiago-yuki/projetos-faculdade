@@ -1,0 +1,166 @@
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --danger-color: #dc2626;
+    --danger-hover: #b91c1c;
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-color: #1e293b;
+    --border-color: #cbd5e1;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    line-height: 1.5;
+}
+
+h1, h2 {
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+/* Mensagens Flash */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+ul li {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+ul li[style*="red"], .alert-erro {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+ul li[style*="green"], .alert-sucesso {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+/* Formulários */
+form {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+/* Botões */
+button[type="submit"], .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button[type="submit"]:hover, .btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #475569;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Ações na Tabela */
+td form {
+    display: inline;
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    margin: 0;
+}
+
+table a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+table a:hover {
+    text-decoration: underline;
+}
+
+table button[type="submit"] {
+    background-color: var(--danger-color);
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+table button[type="submit"]:hover {
+    background-color: var(--danger-hover);
+}
